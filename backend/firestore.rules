@@ -1,0 +1,80 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'superadmin' ||
+        request.auth.token.email == 'que.solutions.service@gmail.com'
+      );
+    }
+
+    function isAdmin() {
+      return isSuperAdmin() || (isAuthenticated() && request.auth.token.role == 'admin');
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // User can register their own profile, with enforced default role and status
+      allow create: if isOwner(userId)
+                    && (request.resource.data.role == 'user' || isSuperAdmin())
+                    && request.resource.data.status == 'active';
+      
+      // Normal user can only update their profile fields; Role and Status are protected
+      allow update: if (isOwner(userId)
+                        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'status', 'uid', 'email']))
+                    || isAdmin();
+
+      // Only Super Admin can delete a user record directly from Firestore
+      allow delete: if isSuperAdmin();
+    }
+
+    // User Activities Collection (Append-Only Telemetry)
+    match /userActivities/{activityId} {
+      allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) || isAdmin();
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false; // Immutable logs
+    }
+
+    // Audit Logs Collection (Privileged Admin & Security Events)
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow write: if false; // Privileged server-side Admin SDK only
+    }
+
+    // Gemini AI Usage Logs
+    match /aiUsage/{usageId} {
+      allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) || isAdmin();
+      allow write: if false; // Cloud Functions server-side logger only
+    }
+
+    // Dashboard Pre-computed Statistics
+    match /dashboardStats/{statDoc} {
+      allow read: if isAdmin();
+      allow write: if false; // Scheduled Cloud Functions only
+    }
+
+    // Application Global Config
+    match /appConfig/{configDoc} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+
+    // Default deny all others
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

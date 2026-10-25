@@ -1,0 +1,28 @@
+{
+  "name": "que-solutions-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QUE Solutions — Full-Stack Ecosystem (Mobile, Web, Firebase Cloud Backend)",
+  "workspaces": [
+    "apps/*",
+    "backend/functions",
+    "packages/*"
+  ],
+  "scripts": {
+    "web": "npm run dev --workspace=apps/web",
+    "mobile:android": "npm run android --workspace=apps/mobile",
+    "mobile:ios": "npm run ios --workspace=apps/mobile",
+    "functions:serve": "npm run serve --workspace=backend/functions",
+    "functions:shell": "npm run shell --workspace=backend/functions",
+    "emulators": "firebase emulators:start --config=backend/firebase.json"
+  },
+  "keywords": [
+    "que-solutions",
+    "react-native",
+    "react",
+    "firebase",
+    "gemini"
+  ],
+  "author": "QUE Solutions",
+  "license": "UNLICENSED"
+}

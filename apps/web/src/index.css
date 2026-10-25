@@ -1,0 +1,74 @@
+@import '@que/shared/theme/que-design-system.css';
+
+/* Additional Web Specific Layout Overrides */
+html, body, #root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Scrollbar styled with Brand Olive */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--que-canvas-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--que-border-strong);
+  border-radius: var(--que-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--que-olive-base);
+}
+
+/* Admin layout containers */
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--que-canvas-base);
+}
+
+.admin-sidebar {
+  width: 260px;
+  background-color: var(--que-forest-base);
+  color: var(--que-forest-contrast);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 40;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 32px;
+}
+
+@media (max-width: 768px) {
+  .admin-shell {
+    flex-direction: column;
+  }
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .admin-content {
+    padding: 16px;
+  }
+}

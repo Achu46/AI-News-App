@@ -1,0 +1,8 @@
+{
+  "name": "@que/shared",
+  "version": "1.0.0",
+  "description": "QUE Solutions Shared Design Tokens, Constants and Models",
+  "main": "src/index.js",
+  "type": "module",
+  "license": "UNLICENSED"
+}
