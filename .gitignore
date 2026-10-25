@@ -12,6 +12,8 @@ node_modules/
 *.local
 serviceAccountKey.json
 *-adminsdk-*.json
+logo.png
+google-services.json
 
 # Firebase
 .firebase/
