@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FIREBASE_API_KEY } from '../config/env';
 
 const AuthContext = createContext(null);
 
 const STORAGE_KEY_USER = '@que_mobile_user';
 const STORAGE_KEY_ONBOARDING = '@que_onboarding_completed';
-const FIREBASE_API_KEY = 'AIzaSyCX9acak8DXItsD62V4lbydln4L7PG9OHI';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);

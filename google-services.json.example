@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "585763421139",
+    "project_number": "YOUR_PROJECT_NUMBER",
     "project_id": "ai-news-bf2ce",
     "storage_bucket": "ai-news-bf2ce.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:585763421139:android:60001f8d290143ab330d26",
+        "mobilesdk_app_id": "YOUR_MOBILE_APP_ID",
         "android_client_info": {
           "package_name": "com.que.aiapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBwO57DjPANHsGR09-1luOf3xwQnqYr5M0"
+          "current_key": "YOUR_ANDROID_API_KEY_HERE"
         }
       ],
       "services": {
